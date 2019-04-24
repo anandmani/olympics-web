@@ -1,5 +1,5 @@
 import React, {PureComponent} from "react";
-import {parseResponse} from '../utils';
+import update from 'immutability-helper';
 import {VictoryLine, VictoryChart, VictoryTheme, VictoryAxis, VictoryLegend} from "victory"; 
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -8,8 +8,9 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import { withStyles } from '@material-ui/core/styles';
-import update from 'immutability-helper';
-import {url} from '../utils';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import {parseResponse, url} from '../utils';
 
 const styles = theme => ({
     root: {
@@ -141,6 +142,20 @@ class Trend1 extends PureComponent{
                                 <FormControlLabel value="Summer" control={<Radio />} label="Summer" />
                                 <FormControlLabel value="Winter" control={<Radio />} label="Winter" />
                             </RadioGroup>
+                            <br />
+                            <br />
+                            <Select
+                                value={this.state.age}
+                                onChange={this.handleChange}
+                                inputProps={{
+                                name: 'age',
+                                id: 'age-simple',
+                                }}
+                            >
+                                <MenuItem value={10}>All sports</MenuItem>
+                                <MenuItem value={20}>One</MenuItem>
+                                <MenuItem value={30}>Two</MenuItem>
+                            </Select>
                         </FormControl>
                     </div>
                 </div>
