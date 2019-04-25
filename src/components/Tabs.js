@@ -59,7 +59,7 @@ class SimpleTabs extends React.Component {
                     <Tab label="Trend 2" component={Link} to='/trend2'/>
                     <Tab label="Trend 3" component={Link} to='/trend3'/>
                     <Tab label="Trend 4" component={Link} to='/trend4'/>
-                    <Tab label="Trend 5" component={Link} to='/trend5'/>                
+                    <Tab label="Trend 5" component={Link} to='/trend5'/>
                 </Tabs>
             </AppBar>
             <TabContainer>

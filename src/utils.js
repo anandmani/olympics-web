@@ -12,4 +12,4 @@ export const parseResponse = (response) => {
     }
 }
 
-export const url = 'http://localhost:3000';
+export const url = 'http://10.136.77.40:3000';
