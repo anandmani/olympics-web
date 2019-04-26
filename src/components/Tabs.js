@@ -9,9 +9,14 @@ import Typography from '@material-ui/core/Typography';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Trend1 from "../trends/Trend1";
 import Trend2 from "../trends/Trend2";
-import Trend3 from "../trends/Trend3";
+// import Trend3 from "../trends/Trend3";
 import Trend4 from "../trends/Trend4";
-import Trend5 from "../trends/Trend5";
+import Totaltally from "../trends/Totaltally";
+import Trend6 from "../trends/Trend6";
+import Trend10 from "../trends/Trend10";
+import Sports from "../trends/Sports";
+import Sport from "../trends/Sport";
+import Medalpercent from "../trends/Medalpercent";
 
 function TabContainer(props) {
   return (
@@ -57,17 +62,25 @@ class SimpleTabs extends React.Component {
                 <Tabs value={value} onChange={this.handleChange}>
                     <Tab label="Trend 1" component={Link} to='/trend1'/>
                     <Tab label="Trend 2" component={Link} to='/trend2'/>
-                    <Tab label="Trend 3" component={Link} to='/trend3'/>
                     <Tab label="Trend 4" component={Link} to='/trend4'/>
-                    <Tab label="Trend 5" component={Link} to='/trend5'/>                
+                    <Tab label="Totaltally" component={Link} to='/totaltally'/>
+                    <Tab label="Trend 6" component={Link} to='/trend6'/>
+                    <Tab label="Trend 10" component={Link} to='/trend10'/>
+                    <Tab label="Sports" component={Link} to='/sports'/>
+                    <Tab label="Sport" component={Link} to='/sport'/>
+                    <Tab label="Medalpercent" component={Link} to='/medalpercent'/>
                 </Tabs>
             </AppBar>
             <TabContainer>
                 <Route exact path="/trend1" component={Trend1} />
                 <Route exact path="/trend2" component={Trend2} />
-                <Route exact path="/trend3" component={Trend3} />
                 <Route exact path="/trend4" component={Trend4} />
-                <Route exact path="/trend5" component={Trend5} />
+                <Route exact path="/totaltally" component={Totaltally} />
+                <Route exact path="/trend6" component={Trend6} />
+                <Route exact path="/trend10" component={Trend10} />
+                <Route exact path="/sports" component={Sports} />
+                <Route exact path="/sport" component={Sport} />
+                <Route exact path="/medalpercent" component={Medalpercent} />
             </TabContainer>
         </div>
       </Router>
