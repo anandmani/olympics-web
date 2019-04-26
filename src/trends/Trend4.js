@@ -1,6 +1,6 @@
 import React, {PureComponent} from "react";
 import update from 'immutability-helper';
-import {VictoryLine, VictoryScatter, VictoryChart, VictoryTheme, VictoryAxis, VictoryLegend} from "victory";
+import {VictoryLine, VictoryScatter, VictoryTooltip, VictoryChart, VictoryTheme, VictoryAxis, VictoryLegend} from "victory";
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -25,7 +25,7 @@ const styles = theme => ({
     },
   });
 
-class Trend1 extends PureComponent{
+class Trend4 extends PureComponent{
     constructor(props){
         super(props);
         this.state = {
@@ -120,6 +120,8 @@ class Trend1 extends PureComponent{
                                     parent: { border: "1px solid #ccc"}
                                 }}
                                 size={3}
+                                labels={(d) => d.AVERAGE_HEIGHT}
+                                labelComponent={<VictoryTooltip/>}
                                 data={this.state.data}
                                 x='YEAR'
                                 y='AVERAGE_HEIGHT'
@@ -157,4 +159,4 @@ class Trend1 extends PureComponent{
     }
 }
 
-export default withStyles(styles)(Trend1);
+export default withStyles(styles)(Trend4);

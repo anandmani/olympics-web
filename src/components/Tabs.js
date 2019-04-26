@@ -12,6 +12,8 @@ import Trend2 from "../trends/Trend2";
 import Trend3 from "../trends/Trend3";
 import Trend4 from "../trends/Trend4";
 import Trend5 from "../trends/Trend5";
+import Trend6 from "../trends/Trend6";
+import Trend10 from "../trends/Trend10";
 
 function TabContainer(props) {
   return (
@@ -60,6 +62,8 @@ class SimpleTabs extends React.Component {
                     <Tab label="Trend 3" component={Link} to='/trend3'/>
                     <Tab label="Trend 4" component={Link} to='/trend4'/>
                     <Tab label="Trend 5" component={Link} to='/trend5'/>
+                    <Tab label="Trend 6" component={Link} to='/trend6'/>
+                    <Tab label="Trend 10" component={Link} to='/trend10'/>
                 </Tabs>
             </AppBar>
             <TabContainer>
@@ -68,6 +72,8 @@ class SimpleTabs extends React.Component {
                 <Route exact path="/trend3" component={Trend3} />
                 <Route exact path="/trend4" component={Trend4} />
                 <Route exact path="/trend5" component={Trend5} />
+                <Route exact path="/trend6" component={Trend6} />
+                <Route exact path="/trend10" component={Trend10} />
             </TabContainer>
         </div>
       </Router>
