@@ -20,7 +20,7 @@ const styles = theme => ({
   },
 });
 
-class Trend10 extends PureComponent{
+class Sports extends PureComponent{
     constructor(props){
         super(props);
         const { classes } = props;
@@ -30,7 +30,7 @@ class Trend10 extends PureComponent{
         }
     }
     componentDidMount(){
-        fetch(`${url}/trend10`)
+        fetch(`${url}/sports`)
         .then(parseResponse)
         .then(data => this.setState(
             (state, props) => (
@@ -45,24 +45,17 @@ class Trend10 extends PureComponent{
           <Table className={this.props.classes.table}>
             <TableHead>
               <TableRow>
-                <TableCell><b>Athlete</b></TableCell>
-                <TableCell><b>Country</b></TableCell>
-                <TableCell><b>Gold</b></TableCell>
-                <TableCell><b>Silver</b></TableCell>
-                <TableCell><b>Bronze</b></TableCell>
-
+                <TableCell><b>Sport</b></TableCell>
+                <TableCell><b>Sport Season</b></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {this.state.data.map((row, i) => (
                 <TableRow key={i}>
                   <TableCell component="th" scope="row">
-                    {row.ATHLETE_NAME}
+                    {row.SPORT}
                   </TableCell>
-                  <TableCell>{row.COUNTRY}</TableCell>
-                  <TableCell>{row.GOLD}</TableCell>
-                  <TableCell>{row.SILVER}</TableCell>
-                  <TableCell>{row.BRONZE}</TableCell>
+                  <TableCell>{row.SPORT_SEASON}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -74,4 +67,4 @@ class Trend10 extends PureComponent{
 
 
 
-export default withStyles(styles)(Trend10);
+export default withStyles(styles)(Sports);

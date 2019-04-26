@@ -1,6 +1,6 @@
 import React, {PureComponent} from "react";
 import update from 'immutability-helper';
-import {VictoryLine, VictoryChart, VictoryScatter, VictoryTheme, VictoryAxis, VictoryLegend} from "victory";
+import {VictoryLine, VictoryChart, VictoryLabel, VictoryScatter, VictoryTooltip, VictoryTheme, VictoryAxis, VictoryLegend} from "victory";
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -24,20 +24,19 @@ const styles = theme => ({
     },
   });
 
-class Trend1 extends PureComponent{
+class Medalpercent extends PureComponent{
     constructor(props){
         super(props);
         this.state = {
             data: [],
             filters:{
-                game_season: 'Summer',
-                sport: 'all'
             }
         }
     }
     componentDidMount(){
         const {game_season, sport} = this.state.filters
-        fetch(`${url}/trend1?game_season=${game_season}&sport=${sport}`)
+        fetch(`${url}/trend6`)
+
         .then(parseResponse)
         .then(data => this.setState(
             (state, props) => (
@@ -45,37 +44,16 @@ class Trend1 extends PureComponent{
             )
         );
     }
-    handleChange = (event) => {
-        const newState = update(this.state, {
-            filters: {
-                game_season : {
-                    $set: event.target.value
-                }
-            }
-        });
-        this.setState(newState);
-    }
-    componentDidUpdate(prevProps, prevState){
-        const {game_season, sport} = this.state.filters
-        let haveFiltersChanged = (prevState.filters.game_season != game_season) || (prevState.filters.sport != sport)
-        if(haveFiltersChanged){
-            fetch(`${url}/trend1?game_season=${game_season}&sport=${sport}`)
-            .then(parseResponse)
-            .then(data => this.setState(
-                (state, props) => (
-                    {...state, data})
-                )
-            );
-        }
 
-    }
+
     render(){
+      console.log(this.state.data);
         return(
             <div>
-                <h1>Rise in Female Participation</h1>
-                <div style={{display: "flex"}}>
-                    <div style={{height: 600, width: 600}}>
-                        <VictoryChart theme={VictoryTheme.material} >
+                <h1>Medals comparision </h1>
+                <div>
+                    <div>
+                        <VictoryChart height= {430} width= {1000} >
                             <VictoryAxis
                                 label='Year'
                                 style={{
@@ -84,7 +62,7 @@ class Trend1 extends PureComponent{
                                 }}
                             />
                             <VictoryAxis
-                                label='Number of participants'
+                                label='Number of medals'
                                 dependentAxis={true}
                                 style={{
                                     axisLabel: {fontSize: 10, padding: 35},
@@ -93,43 +71,68 @@ class Trend1 extends PureComponent{
                             />
                             <VictoryScatter
                                 style={{
-                                    data: { fill: "#2EC4B6" },
+                                    data: { fill: "#C9B037" },
                                     parent: { border: "1px solid #ccc"}
                                 }}
-                                size={2}
+                                size={4}
                                 data={this.state.data}
                                 x='YEAR'
-                                y='MALE_ATHLETES'
+                                y='GOLD_PERCENTAGE'
+                                labels={(d) => d.HOST}
+                                labelComponent={<VictoryTooltip/>}
                             />
                             <VictoryLine
                                 style={{
-                                    data: { stroke: "#2EC4B6", strokeWidth: 1 },
+                                    data: { stroke: "#C9B037", strokeWidth: 1 },
                                     parent: { border: "1px solid #ccc"}
                                 }}
                                 data={this.state.data}
                                 x='YEAR'
-                                y='MALE_ATHLETES'
+                                y='GOLD_PERCENTAGE'
                             />
                             <VictoryScatter
                                 style={{
-                                    data: { fill: "#E71D36"},
+                                    data: { fill: "#B4B4B4"},
                                     parent: { border: "1px solid #ccc"}
                                 }}
-                                size={2}
+                                size={4}
                                 data={this.state.data}
                                 x='YEAR'
-                                y='FEMALE_ATHLETES'
+                                y='SILVER_PERCENTAGE'
+                                labels={(d) => d.HOST}
+                                labelComponent={<VictoryTooltip/>}
                             />
                             <VictoryLine
                                 style={{
-                                    data: { stroke: "#E71D36", strokeWidth: 1},
+                                    data: { stroke: "#B4B4B4", strokeWidth: 1},
                                     parent: { border: "1px solid #ccc"}
                                 }}
                                 data={this.state.data}
                                 x='YEAR'
-                                y='FEMALE_ATHLETES'
+                                y='SILVER_PERCENTAGE'
                             />
-                            <VictoryLegend x={125} y={10}
+                            <VictoryScatter
+                                style={{
+                                    data: { fill: "#AD8A56"},
+                                    parent: { border: "1px solid #ccc"}
+                                }}
+                                size={4}
+                                data={this.state.data}
+                                x='YEAR'
+                                y='BRONZE_PERCENTAGE'
+                                labels={(d) => d.HOST}
+                                labelComponent={<VictoryTooltip/>}
+                            />
+                            <VictoryLine
+                                style={{
+                                    data: { stroke: "#AD8A56", strokeWidth: 1},
+                                    parent: { border: "1px solid #ccc"}
+                                }}
+                                data={this.state.data}
+                                x='YEAR'
+                                y='BRONZE_PERCENTAGE'
+                            />
+                            <VictoryLegend x={250} y={10}
                                 title="Legend"
                                 centerTitle
                                 orientation="horizontal"
@@ -140,43 +143,12 @@ class Trend1 extends PureComponent{
                                     labels: {fontSize: 8}
                                 }}
                                 data={[
-                                    { name: "Male", symbol: { fill: "#2EC4B6" } },
-                                    { name: "Female", symbol: { fill: "#E71D36" } }
+                                    { name: "Gold", symbol: { fill: "#C9B037" } },
+                                    { name: "Silver", symbol: { fill: "#B4B4B4" } },
+                                    { name: "Bronze", symbol: { fill: "#AD8A56" } }
                                 ]}
                             />
                         </VictoryChart>
-                    </div>
-                    <div style={{marginLeft: 10, flex: 1}}>
-                        <h2>Filters</h2>
-                        <FormControl component="fieldset"
-                        // className={classes.formControl}
-                        >
-                            <FormLabel component="legend">Game Season</FormLabel>
-                            <RadioGroup
-                                aria-label="Game Season"
-                                name="game_season"
-                                // className={classes.group}
-                                value={this.state.filters.game_season}
-                                onChange={this.handleChange}
-                            >
-                                <FormControlLabel value="Summer" control={<Radio />} label="Summer" />
-                                <FormControlLabel value="Winter" control={<Radio />} label="Winter" />
-                            </RadioGroup>
-                            <br />
-                            <br />
-                            <Select
-                                value={this.state.age}
-                                onChange={this.handleChange}
-                                inputProps={{
-                                name: 'age',
-                                id: 'age-simple',
-                                }}
-                            >
-                                <MenuItem value={10}>All sports</MenuItem>
-                                <MenuItem value={20}>One</MenuItem>
-                                <MenuItem value={30}>Two</MenuItem>
-                            </Select>
-                        </FormControl>
                     </div>
                 </div>
             </div>
@@ -184,4 +156,4 @@ class Trend1 extends PureComponent{
     }
 }
 
-export default withStyles(styles)(Trend1);
+export default withStyles(styles)(Medalpercent);
