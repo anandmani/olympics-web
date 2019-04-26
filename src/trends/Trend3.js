@@ -125,8 +125,8 @@ class Trend3 extends PureComponent {
 	render() {
 		return (
 			<div>
-				<h1>Geographic Participation</h1>
-				<p>The rise in number of participants from countries</p>
+				<h1>Trend 3 - Geographic Participation</h1>
+				<p>Graph shows the rise in number of participants from countries</p>
 				<div style={{ display: "flex" }}>
 					<div style={{ width: 1100 }}>
 						<div style={wrapperStyles}>

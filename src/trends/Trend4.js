@@ -111,7 +111,8 @@ class Trend4 extends PureComponent {
   render() {
     return (
       <div>
-        <h1>Athlete Physique</h1>
+        <h1>Trend 4 - Athlete Physique</h1>
+        <p>Graph shows the average height of athletes in each sport over the years</p>
         <div style={{ display: "flex" }}>
           <div style={{ height: 600, width: 600 }}>
             <VictoryChart theme={VictoryTheme.material} >
@@ -155,7 +156,7 @@ class Trend4 extends PureComponent {
                 data={
                   Object.keys(sports).map(sport => ({
                     name: sport, 
-                    symbol: {fill: sport.color}
+                    symbol: {fill: sports[sport].color}
                   }))
                   }
               />

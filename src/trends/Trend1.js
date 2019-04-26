@@ -72,7 +72,8 @@ class Trend1 extends PureComponent{
     render(){
         return(
             <div>
-                <h1>Rise in Female Participation</h1>
+                <h1>Trend 1 - Rise in Female Participation</h1>
+                <p>Plot comparing male and female participation</p>
                 <div style={{display: "flex"}}>
                     <div style={{height: 600, width: 600}}>
                         <VictoryChart theme={VictoryTheme.material} >

@@ -152,7 +152,7 @@ class Trend2 extends PureComponent {
   render() {
     return (
       <div>
-        <h1>Performance of weathly countries</h1>
+        <h1>Trend 2 - Performance of weathly countries</h1>
         <p>The numbers represent the number of participants required to win a medal</p>
         <div style={{ display: "flex" }}>
           <div style={{ width: 1100 }}>
@@ -203,13 +203,13 @@ class Trend2 extends PureComponent {
                         let performance = this.getPerformanceForCountry(annotation.label)
                         return performance?
                           <Annotation
-                            dx={0}
-                            dy={0}
+                            dx={40}
+                            dy={-30}
                             subject={annotation.coordinates}
                             strokeWidth={0.1}
                             stroke="#607D8B"
                             style={
-                              {fontSize: 4}
+                              {fontSize: 8}
                             }
                           >
                             <text>{`${this.getPerformanceForCountry(annotation.label) }`}</text>

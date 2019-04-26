@@ -1,4 +1,4 @@
-import React, {PureComponent} from "react";
+import React, { PureComponent } from "react";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -7,7 +7,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import {parseResponse, url} from '../utils';
+import { parseResponse, url } from '../utils';
 
 const styles = theme => ({
   root: {
@@ -20,65 +20,59 @@ const styles = theme => ({
   },
 });
 
-class Trend6 extends PureComponent{
-    constructor(props){
-        super(props);
-        const { classes } = props;
-        this.state = {
-          data: [],
-          filters:{}
-        }
+class CountryTally extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [],
+      filters: {}
     }
-    componentDidMount(){
-        fetch(`${url}/trend6`)
-        .then(parseResponse)
-        .then(data => this.setState(
-            (state, props) => (
-                {...state, data})
-            )
-        );
+  }
+  componentDidMount() {
+    fetch(`${url}/countrytally`)
+      .then(parseResponse)
+      .then(data => this.setState(
+        (state, props) => (
+          { ...state, data })
+      )
+      );
 
-    }
-    render(){
-      return(
+  }
+  render() {
+    return (
+      <div>
+        <h1>Medals Tally</h1>
+        <p>A record of all the medals won by a country in Summer and Winter games</p>
         <Paper className={this.props.classes.root}>
           <Table className={this.props.classes.table}>
             <TableHead>
               <TableRow>
-                <TableCell><b>Game No.</b></TableCell>
-                <TableCell><b>Year</b></TableCell>
                 <TableCell><b>Country</b></TableCell>
                 <TableCell><b>Gold</b></TableCell>
-                <TableCell><b>Gold Percentage</b></TableCell>
                 <TableCell><b>Silver</b></TableCell>
-                <TableCell><b>Silver Percentage</b></TableCell>
                 <TableCell><b>Bronze</b></TableCell>
-                <TableCell><b>Bronze Percentage</b></TableCell>
+
               </TableRow>
             </TableHead>
             <TableBody>
               {this.state.data.map((row, i) => (
                 <TableRow key={i}>
                   <TableCell component="th" scope="row">
-                    {row.GAME}
+                    {row.COUNTRY}
                   </TableCell>
-                  <TableCell>{row.YEAR}</TableCell>
-                  <TableCell>{row.HOST}</TableCell>
                   <TableCell>{row.GOLD}</TableCell>
-                  <TableCell>{row.GOLD_PERCENTAGE.toFixed(2)}</TableCell>
                   <TableCell>{row.SILVER}</TableCell>
-                  <TableCell>{row.SILVER_PERCENTAGE.toFixed(2)}</TableCell>
                   <TableCell>{row.BRONZE}</TableCell>
-                  <TableCell>{row.BRONZE_PERCENTAGE.toFixed(2)}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </Paper>
-      )
-    }
+      </div>
+    )
   }
+}
 
 
 
-export default withStyles(styles)(Trend6);
+export default withStyles(styles)(CountryTally);

@@ -1,4 +1,4 @@
-import React, {PureComponent} from "react";
+import React, { PureComponent } from "react";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -7,7 +7,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import {parseResponse, url} from '../utils';
+import { parseResponse, url } from '../utils';
 
 const styles = theme => ({
   root: {
@@ -20,31 +20,35 @@ const styles = theme => ({
   },
 });
 
-class Totaltally extends PureComponent{
-    constructor(props){
-        super(props);
-        const { classes } = props;
-        this.state = {
-          data: [],
-          filters:{}
-        }
+class IndividualTally extends PureComponent {
+  constructor(props) {
+    super(props);
+    const { classes } = props;
+    this.state = {
+      data: [],
+      filters: {}
     }
-    componentDidMount(){
-        fetch(`${url}/totaltally`)
-        .then(parseResponse)
-        .then(data => this.setState(
-            (state, props) => (
-                {...state, data})
-            )
-        );
+  }
+  componentDidMount() {
+    fetch(`${url}/individualtally`)
+      .then(parseResponse)
+      .then(data => this.setState(
+        (state, props) => (
+          { ...state, data })
+      )
+      );
 
-    }
-    render(){
-      return(
+  }
+  render() {
+    return (
+      <div>
+        <h1>Individual Medals Tally</h1>
+        <p>A record of all the medals won by an athlete in Summer and Winter games</p>
         <Paper className={this.props.classes.root}>
           <Table className={this.props.classes.table}>
             <TableHead>
               <TableRow>
+                <TableCell><b>Athlete</b></TableCell>
                 <TableCell><b>Country</b></TableCell>
                 <TableCell><b>Gold</b></TableCell>
                 <TableCell><b>Silver</b></TableCell>
@@ -56,8 +60,9 @@ class Totaltally extends PureComponent{
               {this.state.data.map((row, i) => (
                 <TableRow key={i}>
                   <TableCell component="th" scope="row">
-                    {row.COUNTRY}
+                    {row.ATHLETE_NAME}
                   </TableCell>
+                  <TableCell>{row.COUNTRY}</TableCell>
                   <TableCell>{row.GOLD}</TableCell>
                   <TableCell>{row.SILVER}</TableCell>
                   <TableCell>{row.BRONZE}</TableCell>
@@ -66,10 +71,11 @@ class Totaltally extends PureComponent{
             </TableBody>
           </Table>
         </Paper>
-      )
-    }
+      </div>
+    )
   }
+}
 
 
 
-export default withStyles(styles)(Totaltally);
+export default withStyles(styles)(IndividualTally);

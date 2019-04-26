@@ -1,4 +1,4 @@
-import React, {PureComponent} from "react";
+import React, { PureComponent } from "react";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -7,7 +7,11 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import {parseResponse, url} from '../utils';
+import { parseResponse, url } from '../utils';
+import queryString from 'query-string';
+import { Link } from "react-router-dom";
+import Breadcrumbs from '@material-ui/lab/Breadcrumbs';
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   root: {
@@ -20,27 +24,34 @@ const styles = theme => ({
   },
 });
 
-class Sport extends PureComponent{
-    constructor(props){
-        super(props);
-        const { classes } = props;
-        this.state = {
-          data: [],
-          filters:{}
-        }
+class Sport extends PureComponent {
+  constructor(props) {
+    super(props);
+    const { classes } = props;
+    this.state = {
+      data: [],
+      filters: {}
     }
-    componentDidMount(){
-        fetch(`${url}/sport?name=Beach Volleyball`)
-        .then(parseResponse)
-        .then(data => this.setState(
-            (state, props) => (
-                {...state, data})
-            )
-        );
-
-    }
-    render(){
-      return(
+  }
+  componentDidMount() {
+    let sport = queryString.parse(this.props.location.search).name
+    fetch(`${url}/sport?name=${encodeURIComponent(sport)}`)
+      .then(parseResponse)
+      .then(data => this.setState(
+        (state, props) => (
+          { ...state, data })
+      )
+    );
+  }
+  render() {
+    let sport = queryString.parse(this.props.location.search).name
+    return (
+      <div>
+        <Breadcrumbs arial-label="Breadcrumb">
+          <Typography color="textPrimary">All Sports</Typography>
+          <Typography color="textPrimary">{sport}</Typography>
+          <Typography color="textSecondary">[Event]</Typography>
+        </Breadcrumbs>
         <Paper className={this.props.classes.root}>
           <Table className={this.props.classes.table}>
             <TableHead>
@@ -52,7 +63,7 @@ class Sport extends PureComponent{
             </TableHead>
             <TableBody>
               {this.state.data.map((row, i) => (
-                <TableRow key={i}>
+                <TableRow key={i} component={Link} to={`/event?name=${row.EVENT}`} style={{textDecoration: "none"}}>
                   <TableCell component="th" scope="row">
                     {row.SPORT}
                   </TableCell>
@@ -63,10 +74,9 @@ class Sport extends PureComponent{
             </TableBody>
           </Table>
         </Paper>
-      )
-    }
+      </div>
+    )
   }
-
-
+}
 
 export default withStyles(styles)(Sport);

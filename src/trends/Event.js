@@ -8,14 +8,9 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { parseResponse, url } from '../utils';
+import queryString from 'query-string';
 import Breadcrumbs from '@material-ui/lab/Breadcrumbs';
 import Typography from '@material-ui/core/Typography';
-import { Link } from "react-router-dom";
-import Button from '@material-ui/core/Button';
-
-function formatNumber(num) {
-  return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
-}
 
 const styles = theme => ({
   root: {
@@ -28,7 +23,7 @@ const styles = theme => ({
   },
 });
 
-class Sports extends PureComponent {
+class Event extends PureComponent {
   constructor(props) {
     super(props);
     const { classes } = props;
@@ -38,48 +33,45 @@ class Sports extends PureComponent {
     }
   }
   componentDidMount() {
-    fetch(`${url}/sports`)
+    let event = queryString.parse(this.props.location.search).name
+    fetch(`${url}/event?name=${encodeURIComponent(event)}`)
       .then(parseResponse)
       .then(data => this.setState(
         (state, props) => (
           { ...state, data })
       )
-    );
-  }
-  handleRowsCheck = () => {
-    fetch(`${url}/check100k`)
-      .then(parseResponse)
-      .then(data => alert(`Count of rows in pariticipant table: ${formatNumber(data[0].COUNT)}`));
+      );
   }
   render() {
+    let event = queryString.parse(this.props.location.search).name
     return (
       <div>
-        <Button variant="outlined" color="primary" onClick={this.handleRowsCheck}>
-          Check 100k tuples
-          </Button>
-        <br />
-        <br />
         <Breadcrumbs arial-label="Breadcrumb">
           <Typography color="textPrimary">All Sports</Typography>
-          <Typography color="textSecondary">[Sport]</Typography>
-          <Typography color="textSecondary">[Event]</Typography>
+          <Typography color="textPrimary">{event.split(' ')[0]}</Typography>
+          <Typography color="textPrimary">{event}</Typography>
         </Breadcrumbs>
-
         <Paper className={this.props.classes.root}>
           <Table className={this.props.classes.table}>
             <TableHead>
               <TableRow>
-                <TableCell><b>Sport</b></TableCell>
-                <TableCell><b>Season</b></TableCell>
+                <TableCell><b>Event</b></TableCell>
+                <TableCell><b>Year</b></TableCell>
+                <TableCell><b>Gold</b></TableCell>
+                <TableCell><b>Silver</b></TableCell>
+                <TableCell><b>Bronze</b></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {this.state.data.map((row, i) => (
-                <TableRow key={i} component={Link} to={`/sport?name=${row.SPORT}`} style={{ textDecoration: "none" }}>
+                <TableRow key={i}>
                   <TableCell component="th" scope="row">
-                    {row.SPORT}
+                    {row.EVENT}
                   </TableCell>
-                  <TableCell>{row.SPORT_SEASON}</TableCell>
+                  <TableCell>{row.YEAR}</TableCell>
+                  <TableCell>{row.GOLDEN}</TableCell>
+                  <TableCell>{row.SILVER}</TableCell>
+                  <TableCell>{row.BRONZE}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -90,6 +82,4 @@ class Sports extends PureComponent {
   }
 }
 
-
-
-export default withStyles(styles)(Sports);
+export default withStyles(styles)(Event);

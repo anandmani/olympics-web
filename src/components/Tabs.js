@@ -9,14 +9,21 @@ import Typography from '@material-ui/core/Typography';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Trend1 from "../trends/Trend1";
 import Trend2 from "../trends/Trend2";
-// import Trend3 from "../trends/Trend3";
+import Trend3 from "../trends/Trend3";
 import Trend4 from "../trends/Trend4";
-import Totaltally from "../trends/Totaltally";
-import Trend6 from "../trends/Trend6";
-import Trend10 from "../trends/Trend10";
+import Trend5 from "../trends/Trend5";
+import HostPerformance from "../trends/HostPerformance";
+import CountryTally from "../trends/CountryTally";
+
 import Sports from "../trends/Sports";
 import Sport from "../trends/Sport";
-import Medalpercent from "../trends/Medalpercent";
+import Event from "../trends/Event";
+
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state/index';
+import IndividualTally from '../trends/IndividualTally';
 
 function TabContainer(props) {
   return (
@@ -37,12 +44,35 @@ const styles = theme => ({
   },
 });
 
+class TrendsTab extends React.Component {
+  render() {
+    return (
+      <PopupState variant="popover" popupId="demo-popup-menu">
+        {popupState => (
+          <React.Fragment>
+            <Button {...bindTrigger(popupState)} style={{color: "white"}}>
+              Trends
+            </Button>
+            <Menu {...bindMenu(popupState)}>
+              <MenuItem onClick={popupState.close} component={Link} to='/trend1'>Trend 1</MenuItem>
+              <MenuItem onClick={popupState.close} component={Link} to='/trend2'>Trend 2</MenuItem>
+              <MenuItem onClick={popupState.close} component={Link} to='/trend3'>Trend 3</MenuItem>
+              <MenuItem onClick={popupState.close} component={Link} to='/trend4'>Trend 4</MenuItem>
+              <MenuItem onClick={popupState.close} component={Link} to='/trend5'>Trend 5</MenuItem>
+            </Menu>
+          </React.Fragment>
+        )}
+      </PopupState>
+    )
+  }
+}
 class SimpleTabs extends React.Component {
   state = {
-    value: 0,
+    value: 1,
   };
 
   handleChange = (event, value) => {
+    console.log("value is", value)
     this.setState({ value });
   };
 
@@ -51,37 +81,33 @@ class SimpleTabs extends React.Component {
     const { value } = this.state;
 
     return (
-    <Router>
+      <Router>
         <div className={classes.root}>
-            <AppBar position="static">
+          <AppBar position="static">
             <Toolbar>
-          <Typography variant="h6" color="inherit">
-            Olympics Database
-          </Typography>
-        </Toolbar>
-                <Tabs value={value} onChange={this.handleChange}>
-                    <Tab label="Trend 1" component={Link} to='/trend1'/>
-                    <Tab label="Trend 2" component={Link} to='/trend2'/>
-                    <Tab label="Trend 4" component={Link} to='/trend4'/>
-                    <Tab label="Totaltally" component={Link} to='/totaltally'/>
-                    <Tab label="Trend 6" component={Link} to='/trend6'/>
-                    <Tab label="Trend 10" component={Link} to='/trend10'/>
-                    <Tab label="Sports" component={Link} to='/sports'/>
-                    <Tab label="Sport" component={Link} to='/sport'/>
-                    <Tab label="Medalpercent" component={Link} to='/medalpercent'/>
-                </Tabs>
-            </AppBar>
-            <TabContainer>
-                <Route exact path="/trend1" component={Trend1} />
-                <Route exact path="/trend2" component={Trend2} />
-                <Route exact path="/trend4" component={Trend4} />
-                <Route exact path="/totaltally" component={Totaltally} />
-                <Route exact path="/trend6" component={Trend6} />
-                <Route exact path="/trend10" component={Trend10} />
-                <Route exact path="/sports" component={Sports} />
-                <Route exact path="/sport" component={Sport} />
-                <Route exact path="/medalpercent" component={Medalpercent} />
-            </TabContainer>
+              <Typography variant="h6" color="inherit">Olympics Database</Typography>
+            </Toolbar>
+            <Tabs value={value} onChange={this.handleChange} variant="scrollable">
+              <Tab label="Home" component={Link} to='/' />
+              <Tab label="Country Tally" component={Link} to='/countrytally' />
+              <Tab label="Individual Tally" component={Link} to='/individualtally' />
+              <Tab label="Host Performance" component={Link} to='/hostperformance' />
+              <Tab label="Trends" component={TrendsTab} />
+            </Tabs>
+          </AppBar>
+          <TabContainer>
+            <Route exact path="/" component={Sports} />
+            <Route exact path="/sport" component={Sport} />
+            <Route exact path="/event" component={Event} />
+            <Route exact path="/countrytally" component={CountryTally} />
+            <Route exact path="/individualtally" component={IndividualTally} />
+            <Route exact path="/hostperformance" component={HostPerformance} />
+            <Route exact path="/trend1" component={Trend1} />
+            <Route exact path="/trend2" component={Trend2} />
+            <Route exact path="/trend3" component={Trend3} />
+            <Route exact path="/trend4" component={Trend4} />
+            <Route exact path="/trend5" component={Trend5} />
+          </TabContainer>
         </div>
       </Router>
     );

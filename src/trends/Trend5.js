@@ -24,7 +24,7 @@ const styles = theme => ({
     },
   });
 
-class Medalpercent extends PureComponent{
+class Trend5 extends PureComponent{
     constructor(props){
         super(props);
         this.state = {
@@ -35,7 +35,7 @@ class Medalpercent extends PureComponent{
     }
     componentDidMount(){
         const {game_season, sport} = this.state.filters
-        fetch(`${url}/trend6`)
+        fetch(`${url}/trend5`)
 
         .then(parseResponse)
         .then(data => this.setState(
@@ -50,7 +50,8 @@ class Medalpercent extends PureComponent{
       console.log(this.state.data);
         return(
             <div>
-                <h1>Medals comparision </h1>
+                <h1>Trend 5 - Performance of host country</h1>
+                <p>Graph shows what percentage of medals was won by the host country</p>
                 <div>
                     <div>
                         <VictoryChart height= {430} width= {1000} >
@@ -62,7 +63,7 @@ class Medalpercent extends PureComponent{
                                 }}
                             />
                             <VictoryAxis
-                                label='Number of medals'
+                                label='Percentage of medals'
                                 dependentAxis={true}
                                 style={{
                                     axisLabel: {fontSize: 10, padding: 35},
@@ -156,4 +157,4 @@ class Medalpercent extends PureComponent{
     }
 }
 
-export default withStyles(styles)(Medalpercent);
+export default withStyles(styles)(Trend5);
