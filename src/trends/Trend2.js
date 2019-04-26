@@ -27,15 +27,6 @@ const wrapperStyles = {
   margin: "0 auto",
 }
 
-const colorScale = chroma
-  .scale([
-    '#FF6E40',
-    'FFD740',
-    '#00B8D4',
-  ])
-  .mode('lch')
-  .colors(24)
-
 const styles = theme => ({
   root: {
     display: 'flex',
@@ -64,28 +55,28 @@ const getColorFromPCI = (pci) => {
   }
 }
 
-const centreCoordinatesOfCountry = (geography) => {
-  let coordinates
-  if (geography.geometry.type == "MultiPolygon") {
-    let numberOfPolygons = geography.geometry.coordinates.length
-    coordinates = geography.geometry.coordinates[numberOfPolygons-1][0]
-  } else { //polygon
-    coordinates = geography.geometry.coordinates[0]
-  }
-  let minX = coordinates[0][0]
-  let maxX = coordinates[0][0]
-  let minY = coordinates[0][1]
-  let maxY = coordinates[0][1]
-  coordinates.forEach(coordinate => {
-    minX = coordinate[0] < minX ? coordinate[0] : minX;
-    maxX = coordinate[0] > maxX ? coordinate[0] : maxX;
-    minY = coordinate[1] < minY ? coordinate[1] : minY;
-    maxY = coordinate[1] > maxY ? coordinate[1] : maxY;
-  })
-  let centreX = (minX + maxX) / 2
-  let centreY = (minY + maxY) / 2
-  return [centreX, centreY]
-}
+// const centreCoordinatesOfCountry = (geography) => {
+//   let coordinates
+//   if (geography.geometry.type == "MultiPolygon") {
+//     let numberOfPolygons = geography.geometry.coordinates.length
+//     coordinates = geography.geometry.coordinates[numberOfPolygons-1][0]
+//   } else { //polygon
+//     coordinates = geography.geometry.coordinates[0]
+//   }
+//   let minX = coordinates[0][0]
+//   let maxX = coordinates[0][0]
+//   let minY = coordinates[0][1]
+//   let maxY = coordinates[0][1]
+//   coordinates.forEach(coordinate => {
+//     minX = coordinate[0] < minX ? coordinate[0] : minX;
+//     maxX = coordinate[0] > maxX ? coordinate[0] : maxX;
+//     minY = coordinate[1] < minY ? coordinate[1] : minY;
+//     maxY = coordinate[1] > maxY ? coordinate[1] : maxY;
+//   })
+//   let centreX = (minX + maxX) / 2
+//   let centreY = (minY + maxY) / 2
+//   return [centreX, centreY]
+// }
 
 class Trend2 extends PureComponent {
   constructor(props) {
